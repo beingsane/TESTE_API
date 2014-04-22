@@ -1,40 +1,0 @@
-10
-
-dir
-45
-http://servicos-web.net/svn/TESTE_API/trunk/application/public
-http://servicos-web.net/svn
-
-
-
-2014-04-22T16:28:20.001405Z
-45
-api
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-bd6428ec-8d28-4b1e-8540-34145a1e1f74
-
-css
-dir
-
-fonts
-dir
-
-img
-dir
-
-js
-dir
-
