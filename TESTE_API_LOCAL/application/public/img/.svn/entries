@@ -1,0 +1,77 @@
+10
+
+dir
+45
+http://servicos-web.net/svn/TESTE_API/trunk/application/public/img
+http://servicos-web.net/svn
+
+
+
+2014-04-22T16:28:20.001405Z
+45
+api
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+bd6428ec-8d28-4b1e-8540-34145a1e1f74
+
+backend
+dir
+
+frontend
+dir
+
+glyphicons
+dir
+
+img_jquery_ui
+dir
+
+logo.png
+file
+
+
+
+
+2014-04-22T16:25:09.719000Z
+de8086719a3a51761ae9eee5350e2df7
+2014-04-22T16:28:20.001405Z
+45
+api
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8793
+
+temp_upload
+dir
+

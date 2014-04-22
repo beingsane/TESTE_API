@@ -1,0 +1,37 @@
+/********** UPLOAD + Crop **********/
+#maskOpenImgCrop{position:fixed;width:100%;height:110%;left:0;top:0;background: #000;opacity: 0.6;z-index:200;display:none}.imgCrop .maskPhoto{width: 850px;margin-top: 5px;}.imgCrop .buttons{width: 100px;margin-left: 2px; margin-top: 5px;}.divImgCrop{background: url("../img/backend/template/addImagem.png") no-repeat center ;border-radius:10px;cursor: pointer;border: 1px solid #5C6F91}.divImgCrop:hover{background-color: #fff}.uploadId{height:40px;padding-top:10px;margin-left:10px;font-weight:bold;font-size:1.3em;font-family:Arial, Helvetica, sans-serif;text-align:center;background:#f2f2f2;color:#3366cc;border:1px solid #ccc;width:150px;cursor:pointer !important;border-radius:5px;moz-border-radius: 5px;webkit-border-radius: 5px; }.imgCrop{height: 100%;width: 955px;}.crop{display:none;position:absolute;margin-left:25%;z-index:2001;top:10%;left:5px;background:#F0F0F0;border:1px solid #5C6F91;border-radius:10px; }.previewAll{text-align:center;}.buttonsImg{cursor:pointer;}.selectCrop{background-position:0 0px;}.hover{background: #848FB2;}.saveCrop{margin-top: 5px;}.cancelCrop{margin-top: 5px;}.cropImageId{overflow:hidden;border-radius:9px 9px 11px 9px;moz-border-radius: 9px 9px 11px 9px;webkit-border-radius: 9px 9px 11px 9px;border:3px solid #5C6F91;display: inline-block;}.cropImageId img{overflow:hidden;border-radius:1px ;moz-border-radius: 1px ;webkit-border-radius: 1px;}.optionUpload{border:1px dashed black;}.statusId{font-family:Arial;}.filesId{padding:0; margin:0;min-height:300px;}.btnsCrop{				font-weight: bold;				line-height: 1;				padding: 6px 10px;				cursor:pointer; 				color: #fff;				text-align: center;				text-shadow: 0 -1px 1px #64799e;				background: #a5b8da;				background: -moz-linear-gradient(top, #a5b8da 0%, #7089b3 100%);				background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a5b8da), to(#7089b3));			  	border: 1px solid #5c6f91;  				-moz-border-radius: 10px;				-webkit-border-radius: 10px;				border-radius: 10px;				-moz-box-shadow: inset 0 1px 0 0 #aec3e5;				-webkit-box-shadow: inset 0 1px 0 0 #aec3e5;				box-shadow: inset 0 1px 0 0 #aec3e5;}.btnsCrop:hover{background: #848FB2;   cursor: pointer;}.error{background:#f0c6c3; border:1px solid #cc6622; }
+/* jquery.Jcrop.css */
+.jcrop-holder {direction: ltr;text-align: left;}
+.jcrop-vline, .jcrop-hline {background: white url('Jcrop.gif') top left repeat;font-size: 0px;position: absolute;}
+.jcrop-vline {height: 100%;width: 1px !important;}
+.jcrop-hline {width: 100%; height: 1px !important;}
+.jcrop-vline.right {right: 0px;}
+.jcrop-hline.bottom {bottom: 0px;}
+.jcrop-handle {background-color: #333;border: 1px #eee solid;font-size: 1px;}
+.jcrop-tracker {height: 100%; 
+  -webkit-tap-highlight-color: transparent; /* "turn off" link highlight */
+  -webkit-touch-callout: none;              /* disable callout, image save panel */
+  -webkit-user-select: none;                /* disable cut copy paste */
+  width: 100%;
+}
+.jcrop-light .jcrop-vline, .jcrop-light .jcrop-hline {background: white;filter: Alpha(opacity=70) !important;opacity: .70 !important;}
+.jcrop-light .jcrop-handle {
+	background-color: black;
+	border-color: white;
+    border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.jcrop-dark .jcrop-vline, .jcrop-dark .jcrop-hline {
+	background: black;
+  filter: Alpha(opacity=70) !important;
+  opacity: 0.70 !important;
+}
+
+.jcrop-dark .jcrop-handle {
+	background-color: white;
+	border-color: black;
+    border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}

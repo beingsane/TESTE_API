@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/45/TESTE_API/trunk/application/models/backend/login
+END
+exec_login.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/45/TESTE_API/trunk/application/models/backend/login/exec_login.php
+END
+permitions_chek.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/45/TESTE_API/trunk/application/models/backend/login/permitions_chek.php
+END
