@@ -51,10 +51,10 @@ $active_record = TRUE;
 
 
 
-$db['default']['hostname'] = 'mysql03.servicos-web.net';
-$db['default']['username'] = 'servicos_web2';
-$db['default']['password'] = 'FGDGShhajshu';
-$db['default']['database'] = 'servicos_web2';
+$db['default']['hostname'] = '';
+$db['default']['username'] = '';
+$db['default']['password'] = '';
+$db['default']['database'] = '';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
