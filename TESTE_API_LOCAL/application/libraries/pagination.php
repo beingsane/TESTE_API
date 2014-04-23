@@ -227,16 +227,23 @@ class Pagination {
 	
 	public function persistPagination($nane) {
 		$retVal							= "";
+		
 		$this->opcao["limit"]			= $this->ci->input->post($nane.'pagination_limit')!=null ? $this->ci->input->post('pagination_limit') : $this->opcao["limit"];
 		$this->opcao["limitPrev"]		= $this->ci->input->post($nane.'pagination_limitprev');
 		$this->opcao["offset"]			= $this->ci->input->post($nane.'pagination_offset');
 		$this->opcao["offsetPrev"]		= $this->ci->input->post($nane.'pagination_offsetprev');
 		$this->opcao["filterReceived"]	= $this->ci->input->post($this->opcao["name"].'filterReceived');
 		
-		$retVal .= "<input type=\"hidden\" name=\"".$this->opcao["name"]."pagination_offset\" id=\"pagination_offset\" value=\"$this->opcao[offset]\" />\r\n";
-		$retVal .= "<input type=\"hidden\" name=\"".$this->opcao["name"]."pagination_offsetprev\" id=\"pagination_offsetprev\" value=\"$this->opcao[offsetPrev]	\" />\r\n";
-		$retVal .= "<input type=\"hidden\" name=\"".$this->opcao["name"]."pagination_limitprev\" id=\"pagination_limitprev\" value=\"$this->opcao[limit]\" />\r\n";
-		$retVal .= "<input type=\"hidden\" name=\"".$this->opcao["name"]."filterReceived\"  value=\"$this->opcao[filterReceived]\" />\r\n";
+		
+		if($this->opcao["offset"]!=null){
+			$retVal .= "<input type=\"hidden\" name=\"".$this->opcao["name"]."pagination_offset\" id=\"pagination_offset\" value=\"$this->opcao[offset]\" />\r\n";
+			$retVal .= "<input type=\"hidden\" name=\"".$this->opcao["name"]."pagination_offsetprev\" id=\"pagination_offsetprev\" value=\"$this->opcao[offsetPrev]	\" />\r\n";
+			$retVal .= "<input type=\"hidden\" name=\"".$this->opcao["name"]."pagination_limitprev\" id=\"pagination_limitprev\" value=\"$this->opcao[limit]\" />\r\n";
+			$retVal .= "<input type=\"hidden\" name=\"".$this->opcao["name"]."filterReceived\"  value=\"$this->opcao[filterReceived]\" />\r\n";
+		}
+		
+		
+		echo($retVal);
 	}
 }
 ?>

@@ -37,9 +37,9 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-$resquestUL = explode("/", $_SERVER["REQUEST_URI"]);
+$resquestUL 	= explode("/", $_SERVER["REQUEST_URI"]);
 if(in_array("backend", $resquestUL)){
-	$route['default_controller'] 	= _HTTP_BASEPATH_."/backend/login_mig";
+	$route['default_controller'] 	= "backend/login_mig";
 	$route['404_override'] 			= "my_404_backend";
 }else{
 	$route['default_controller'] 	= "home";

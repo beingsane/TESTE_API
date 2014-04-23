@@ -41,6 +41,15 @@ class Perfis_model extends CI_Model {
 				$this->systablog->putLog(0,"backend/perfis_backend/edit_commit","O Perfil[$nameSysPerfil] com o ID[".$idSysPerfil."]  foi alterado com sucesso!");
 				$this->template_functions->setError("success","O Perfil[$nameSysPerfil] foi alterado com sucesso","Alerta");
 			}
+			/////carrega todos os usuários que possuem esse perfil
+			$this->db->where('idPerfilSysPerfilUser', $idSysPerfil);
+			$query 		= $this->db->get('sys_perfiluser');
+			$user_result= $query->result();
+			foreach ($user_result as $key => $value) {
+				$this->check_file_permitions->newFilePermition($value->idUserSysPerfil);
+			}
+			
+			
 		}		
 		/////Remove todas as permições antigas e insere as novas
 		$this->db->where('idPerfilSysPermissoes', $idSysPerfil);

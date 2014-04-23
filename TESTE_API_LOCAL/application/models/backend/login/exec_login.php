@@ -15,6 +15,7 @@ class Exec_login extends CI_Model {
 				'name_site' => _NAME_SITE_LOCAL_,
 			);
 		$this->session->set_userdata($data);
+		$this->systablog->putLog(0,"backend/login/exec_login","O usuário [{$query->row()->nomeSysUsuarios}] ID[{$query->row()->idSysUsuarios}] se logou no sistema!");
 		return true;
     }
 }

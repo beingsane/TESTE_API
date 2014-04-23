@@ -14,7 +14,6 @@
 
 	<!-- jQuery -->
 	<script src="<?=_HTTP_JSPATH_?>/jquery-1.7.1.min.js"></script>
-	
 	<link rel="shortcut icon" href="/favicon.ico" />
 	<!-- Apple devices Homescreen icon -->
 	<link rel="apple-touch-icon-precomposed" href="img/apple-ico.png" />
@@ -30,7 +29,7 @@
 				<input type="hidden" value="<?=$this->input->get("url")?>" name="url">
 				<div class="control-group">
 					<div class="email controls">
-						<input type="text" name='user' placeholder="Usuário/Email" class='input <?=(isset($email) ? "error" : "")?>'>
+						<input type="text" name='user' placeholder="Usuário" class='input <?=(isset($email) ? "error" : "")?>'>
 					</div>
 				</div>
 				<div class="control-group">
@@ -47,11 +46,23 @@
 					</div>
 					<input type="submit" value="Login" class='btn btn-primary'>
 				</div>
+				<span id="lost_pass" style="display: inline-block;font-size: 12px;text-align: right;cursor: pointer;float: right;margin-top: 3px;color: #999;">Esqueci minha senha</span>
+				<div style="clear: both;"></div>
 			</form>
 		
 		</div>
 	</div>
-	
+	<div id="mask"></div>
+	<div id="lost_pass_content">
+		<div class="control-group">
+			<div class="pw controls" style="width: 90%;margin: 10px auto 10px 10px;;text-align: center;">
+				<input type="text" name="lost_pass" placeholder="Email" class='input' id="lost_pass_email"/>
+				<span class='btn btn-primary' style="margin-top: 20px;display: block;" id="send_email">Recuperar</span>
+				<div id="error_lost_pass"></div>
+			</div>
+		</div>
+	</div>
+	<script src="<?=_HTTP_JSPATH_?>/backend/login.js"></script>
 </body>
 
 </html>

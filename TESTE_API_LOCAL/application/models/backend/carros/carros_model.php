@@ -16,23 +16,23 @@ class Carros_model extends CI_Model {
 		$this->pagination->setTotal($this->db->count_all_results('car')); 
 		$this->db->limit($this->pagination->getLimit(),$this->pagination->getOffset());
 		$this->db->join('sys_usuarios', 'sys_usuarios.idSysUsuarios = car.id_user_rel');
-		$this->db->join('brand', 'brand.id_brand = car.id_brand_rel');
+		$this->db->join('marcas', 'marcas.id_marca = car.id_marca_rel');
 	
 		/////Monta o select
 		$this->db->select("id_car,
 							name_car,
-							id_brand_rel,
+							id_marca_rel,
 							img,
 							value_car,
 							parc_number,
-							DATE_FORMAT(year, '%d/%m/%Y') as ano,
 							value_Total_interest,
 							DATE_FORMAT(car.date_cad, '%d/%m/%Y') as date_cad,
 							nomeSysUsuarios,
 							idSysUsuarios,
-							name_brand",
+							name_marca,
+							year",
 							false);
-		$this->db->order_by("date_cad", "DESC"); 
+		$this->db->order_by("name_car", "DESC"); 
 		
 		
 		$query = $this->db->get_where('car',$where);
@@ -42,90 +42,88 @@ class Carros_model extends CI_Model {
 		
     }
     
-	function cadastra_atualiza($id, $id_produto_compra=null, $qtd_compra, $valor_unitario, $data_compra, $obs_compra) {
+	function cadastra_atualiza($id, $modelo,
+										$marca,
+										$ano,
+										$valor = null,
+										$parcela,
+										$image = null,
+										$alter_value = null) {
+		$totalJuros 	= $parcela*0.7;
+		$valorJuros		= $valor*($totalJuros/100);
+		
 		$data_bd = array(
-					'qtd_compra' 				=> $qtd_compra,
-					'valor_unitario'			=> $valor_unitario,
-					'data_compra'				=> $data_compra,
-					'obs_compra'				=> $obs_compra	
+					'id_marca_rel' 		=> $marca,
+					'parc_number'		=> $parcela,
+					'year'				=> $ano,
+					'name_car'			=> $modelo	
 				);
 				
 		if(!$id){
-			$data_bd['id_produto_compra'] = $id_produto_compra;
-			$this->db->insert('bebidas_cabral_compras', $data_bd);
+			$totalJuros 	= $parcela*0.7;
+			$valorJuros		= $valor*($totalJuros/100);
+			
+			$data_bd['date_cad'] 			= date("Y-m-d H:i",time());
+			$data_bd['id_user_rel'] 		= $this->session->userdata('user_id');
+			$data_bd['value_car']			= $valor;
+			$data_bd['value_Total_interest']= $valor+$valorJuros;
+			$data_bd['img']					= $image;
+			
+			$this->db->insert('car', $data_bd);
 			if($this->db->insert_id()){
-				$id_insert = $this->db->insert_id();
-				
-				/////Atualiza a quantidade em estoque
-				$this->db->where('id_produto', $id_produto_compra);
-				$this->db->set("qtd_produto", "qtd_produto+$qtd_compra", false);
-				$this->db->set("date_atualizacao_produto" , date("Y-m-d H:i:s",time()), true);
-				if(!$this->db->update('bebidas_cabral_produtos')){
-					$this->template_functions->setError("error","Erro ao editar a quantidade em estoque.Entre em contato com o administrador do sistema","Erro");
-					return false;
-				}else{
-					$this->systablog->putLog(0,"backend/compras/add_commit","Foi alterado com sucesso a quantidade em estoque do produto[$id_produto_compra] Quantidade[$qtd_compra]!");
-				}
-				$this->systablog->putLog(0,"backend/compras/add_commit","A compra com o ID[$id_insert] com o produto[$id_produto_compra] e com quantidade[$qtd_compra] e valor[$valor_unitario] foi adicionada com sucesso!");
-				$this->template_functions->setError("success","Produto(s) cadastrado(s) com sucesso!","Sucesso");
+				$this->systablog->putLog(0,"backend/carros/add_commit","O carro com o ID[$this->db->insert_id()] com o marca[$marca]  foi adicionado com sucesso!");
+				$this->template_functions->setError("success","Carro cadastrado com sucesso!","Sucesso");
 				return true;
 			}else{
-				$this->template_functions->setError("error","Erro ao inserir o produto[$nome_produto]. Verifique o nome do produto[$nome_produto] não são duplicados.","Erro");
+				$this->template_functions->setError("error","Erro ao inserir o carro[$modelo].","Erro");
 				return false;
 			}
-		}elseif(!$id_produto_compra){
-			/////Pega o valor antigo de quantidade e diminui do estoque
-			$this->db->select("qtd_compra,id_produto_compra");
-			$query = $this->db->get_where('bebidas_cabral_compras',array("id_compra"=>$id));
-			$qtd_result	= $query->result();
-			$this->db->where('id_produto', $qtd_result[0]->id_produto_compra);
-			$this->db->set("qtd_produto", "qtd_produto-{$qtd_result[0]->qtd_compra}", false);
-			$this->db->set("date_atualizacao_produto" , date("Y-m-d H:i:s",time()), true);
-			if(!$this->db->update('bebidas_cabral_produtos')){
-				$this->template_functions->setError("error","Erro ao atualizar quantidade em estoque.","Erro");
+		}else{
+			$totalJuros 	= $parcela*0.7;
+			
+			if($alter_value){
+				$valorJuros		= $valor*($totalJuros/100);
+				$data_bd['value_Total_interest']= $valor+$valorJuros;
+			} else {
+				$this->db->select("value_car");
+				$query = $this->db->get_where('car',array("id_car"=>$id));
+				$value_result	= $query->result();
+				$value 			= $value_result[0]->value_car;
+				$valorJuros		= $value*($totalJuros/100);
+				$data_bd['value_Total_interest']= $value+$valorJuros;
+			}
+			if($image){
+				$data_bd['img']= $image;
+			}
+			
+			
+			if(!$this->db->update('car', $data_bd ,array('id_car'=>$id))){
+				$this->template_functions->setError("error","Erro ao editar o carro. Entre em contatio com o administrador do siyyytema","Erro");
 				return false;
 			}else{
-				$this->systablog->putLog(0,"backend/compras/edit_commit","Foi decrementado o estoque do produto com o ID[".$id."] o valor de -[{$qtd_result[0]->qtd_compra}]!");
-				/////Tenta fazer o update da compra
-				if(!$this->db->update('bebidas_cabral_compras', $data_bd ,array('id_compra'=>$id))){
-					$this->template_functions->setError("error","Erro ao editando compra.","Erro");
-					return false;
-				}else{
-					/////Atualiza o estoque novamente
-					$this->db->where('id_produto', $qtd_result[0]->id_produto_compra);
-					$this->db->set("qtd_produto", "qtd_produto+{$qtd_compra}", false);
-					$this->db->set("date_atualizacao_produto" , date("Y-m-d H:i:s",time()), true);
-					if(!$this->db->update('bebidas_cabral_produtos')){
-						$this->template_functions->setError("error","Erro ao atualizar quantidade em estoque com o novo valor.","Erro");
-						return false;
-					}
-					$this->systablog->putLog(0,"backend/produtos/edit_commit","A compra com o ID[".$id."] foi alterada com sucesso!");
-					$this->template_functions->setError("success","Compra alterada com sucesso!","Sucesso");
-				}
+				$this->systablog->putLog(0,"backend/carros/edit_commit","O carro[{$modelo}] com o ID[".$id."]  foi editado com sucesso!");
+				$this->template_functions->setError("success","O carro[{$modelo}] foi alterado com sucesso.","Alerta");
 			}
-		}		
+		}	
 		return true;
     }
     
-	function delete($id_code,$type) {
-		if($type=="block"){
-			$valueUpdate 	= 0;
-			$mensErro		= "já está desativado";
-			$mensSuccess	= "desativado com sucesso";
-		}else{
-			$valueUpdate = 1;
-			$mensErro		= "já está ativado";
-			$mensSuccess	= "ativado com sucesso";
-		}
-		$dataUpdate = array('ativo_produto' => $valueUpdate);
+	function delete($id_code) {
+		$mensErro		= "não possivel remover";
+		$mensSuccess	= "foi removido com sucesso";
 		
 		foreach ($id_code as $value) {
 			$data_info	= $this->lista($value);
-			if(!$this->db->update('bebidas_cabral_produtos', $dataUpdate ,array('id_produto'=>$value))){
-				$this->template_functions->setError("info","O produto[{$data_info[0]->nome_produto}] $mensErro.","Alerta");
+			$this->db->where('id_car', $value);
+			if(!$this->db->delete('car')){
+				$this->template_functions->setError("info","O carro[{$data_info[0]->name_car}] $mensErro.","Alerta");
 			}else{
-				$this->systablog->putLog(0,"backend/produtos/block_unblock","O produto[{$data_info[0]->nome_produto}] com o ID[".$value."]  foi $mensSuccess!");
-				$this->template_functions->setError("info","O produto[{$data_info[0]->nome_produto}] foi $mensSuccess.","Alerta");
+				/////Remove a imagem do carro
+				if(file_exists(_BASEPATH_."/public/img/carros/".$data_info[0]->img)){
+					unlink(_BASEPATH_."/public/img/carros/".$data_info[0]->img);
+				}
+				$this->systablog->putLog(0,"backend/carros/delete","O carro[{$data_info[0]->name_car}] com o ID[".$value."]  $mensSuccess!");
+				$this->template_functions->setError("info","O carro[{$data_info[0]->name_car}] $mensSuccess.","Alerta");
 			}
 			
 		}

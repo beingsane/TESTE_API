@@ -37,6 +37,7 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 ///Caminho para a raiz admpc
+define("_FOLDER_PROJECT_","");
 define("_SECTIONID_","ADMIN_BACKEND");
 define("_NAME_SITE_LOCAL_","teste_api");
 define("_NAME_EMPRESA_","Teste API");
@@ -51,7 +52,7 @@ $scriptFileName	= $_SERVER["SCRIPT_FILENAME"];
 $scriptFileName = substr($scriptFileName,$docRootSize);
 $absolutHTTP	= dirname($scriptFileName);
 $absolutHTTP	= $absolutHTTP;
-define("_HTTP_BASEPATH_",_BASEURL_);
+define("_HTTP_BASEPATH_",_BASEURL_.(_FOLDER_PROJECT_ ? "/"._FOLDER_PROJECT_ : ""));
 define("_HTTP_CSSPATH_",_HTTP_BASEPATH_."/public/css");
 define("_HTTP_IMGPATH_",_HTTP_BASEPATH_."/public/img");
 define("_HTTP_JSPATH_",_HTTP_BASEPATH_."/public/js");

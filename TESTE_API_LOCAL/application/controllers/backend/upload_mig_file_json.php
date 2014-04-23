@@ -1,6 +1,6 @@
 <?
 class Upload_mig_file_json extends CI_Controller_Auth_JSON {	public function index(){		$data						= array("errorCode"=>0 ,"errorDesc"=>"success","data"=>_HTTP_IMGPATH_."/anunciosTemp/imageAnuncio1.jpg");
-		$upload_path				= _BASEPATH_."/public/img/temp_upload/";		$config['upload_path'] 		= $upload_path;		//$config['allowed_types'] 	= 'gif|jpg|png|x-png|x-jpg';		$config['allowed_types'] 	= 'jpg|png|x-png|x-jpg';		$config['max_width'] 		= '1770';		$config['max_height'] 		= '1110';		$config['encrypt_name'] 	= true;		$this->load->library('upload', $config);		if (!$this->upload->do_upload('arquivo')){
+		$upload_path				= _BASEPATH_."/public/img/temp_upload/";		$config['upload_path'] 		= $upload_path;				$config['allowed_types'] 	= 'jpg|png|x-png|x-jpg';		$config['max_width'] 		= '1770';		$config['max_height'] 		= '1110';		$config['encrypt_name'] 	= true;		$this->load->library('upload', $config);		if (!$this->upload->do_upload('arquivo')){
 			$data=array("errorCode"=>1 ,"errorDesc"=>"Erro subindo imagem.São permitidos apenas imagens JPG e de 1770px X 1110px ");
 			echo json_encode($data);
 			return;

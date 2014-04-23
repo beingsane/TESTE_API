@@ -31,6 +31,7 @@ class Login_mig extends CI_Controller_Auth_Login {
         	$errorDesc["error"] = "Usuário e ou senha invalidos";
 			$errorCode= 1;
         	$this->load->view('backend/login',$errorDesc);
+        	return;
         }
        $this->load->helper('url');
        if($url){
